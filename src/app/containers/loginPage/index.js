@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import styles from 'app/content/styles/containers/loginPage/index.css';
 
-import FullPageLoader from 'app/components/fullPageLoader';
+import FullPageLoader from 'app/components/fullPageLoader/index';
 
 import { 
   doLogin,
