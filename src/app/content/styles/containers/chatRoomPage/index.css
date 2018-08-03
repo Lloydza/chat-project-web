@@ -47,6 +47,7 @@
 .inputBoxContainer {
 	position: fixed;
 	bottom: 0;
+	right: 0;
 	left: 250px;
 	height: 60px;
 	background-color: #F5F5F5;
