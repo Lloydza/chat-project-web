@@ -9,7 +9,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'webpack-hot-middleware/client',
-    path.resolve(__dirname, '../src/app/index.js')
+    path.resolve(__dirname, '../src/app/index.jsx')
   ],
   output: {
     path: path.resolve(__dirname, '../dist/static'),

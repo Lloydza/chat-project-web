@@ -4,12 +4,12 @@ import rootReducer from './reducers/index';
 import { chatMiddleware } from './chatClient';
 
 export default function configureStore() {
-	return createStore(
-		rootReducer, 
-		{},
-		applyMiddleware(
-			thunk,
-			chatMiddleware
-		)
-	)
-};
+  return createStore(
+    rootReducer,
+    {},
+    applyMiddleware(
+      thunk,
+      chatMiddleware,
+    ),
+  );
+}

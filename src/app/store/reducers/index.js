@@ -7,11 +7,9 @@ import pages from './pages/index';
 const appReducer = combineReducers({
   pages,
   session,
-  chat
+  chat,
 });
 
-const rootReducer = (state, action) => {
-  return appReducer(state, action)
-}
+const rootReducer = (state, action) => appReducer(state, action);
 
 module.exports = rootReducer;

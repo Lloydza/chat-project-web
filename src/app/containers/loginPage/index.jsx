@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import styles from 'app/content/styles/containers/loginPage/index.css';
 
 import FullPageLoader from 'app/components/fullPageLoader/index';
 
-import { 
+import {
   doLogin,
-  updateLoginPageUserName
+  updateLoginPageUserName,
 } from 'app/store/actions';
 
 class LoginPage extends Component {
@@ -31,15 +32,19 @@ class LoginPage extends Component {
   }
 
   render() {
-    if (this.props.page.isLoading) {
+    const { page } = this.props;
+
+    if (page.isLoading) {
       return <FullPageLoader />;
     }
-    
+
     return (
       <div className={styles.container}>
         <div className={styles.innerContainer}>
           <div className={styles.headerContainer}>
-            <label className={styles.pageHeader}>Please choose a chat name to log in:</label>
+            <label className={styles.pageHeader}>
+Please choose a chat name to log in:
+            </label>
           </div>
           <div>
             <input
@@ -47,8 +52,8 @@ class LoginPage extends Component {
               ref={(input) => { this.loginInput = input; }}
               onKeyPress={this.handleKeyPress}
               className={styles.userName}
-              placeholder='Enter chat name...'
-              value={this.props.page.userName}
+              placeholder="Enter chat name..."
+              value={page.userName}
               onChange={this.handleUpdateLoginPageUserName}
             />
             <input type="button" className={styles.button} onClick={this.handleLogin} value="LOGIN" />
@@ -57,23 +62,27 @@ class LoginPage extends Component {
       </div>
     );
   }
+}
+
+LoginPage.propTypes = {
+  page: PropTypes.object.isRequired,
+  onUpdateLoginPageUserName: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = function (state) {
+  return {
+    page: state.pages.login,
+  };
 };
 
-var mapStateToProps = function(state) {
-  return {
-    page: state.pages.login
-  }
-};
-
-var mapDispatchToProps = (dispatch) => {
-  return {
-    onUpdateLoginPageUserName: (userName) => {
-      dispatch(updateLoginPageUserName(userName));
-    },
-    onLogin: () => {
-      dispatch(doLogin());
-    }
-  }
-};
+const mapDispatchToProps = dispatch => ({
+  onUpdateLoginPageUserName: (userName) => {
+    dispatch(updateLoginPageUserName(userName));
+  },
+  onLogin: () => {
+    dispatch(doLogin());
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

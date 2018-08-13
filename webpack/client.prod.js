@@ -7,7 +7,7 @@ module.exports = {
   performance: { hints: false },
   entry: [
     'babel-polyfill',
-    path.resolve(__dirname, '../src/app/index.js')
+    path.resolve(__dirname, '../src/app/index.jsx')
   ],
   output: {
     path: path.resolve(__dirname, '../dist/static'),
