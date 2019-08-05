@@ -7,56 +7,50 @@ export const EMIT_CHAT_TYPING_STATUS = 'EMIT_CHAT_TYPING_STATUS';
 export const UPDATE_CHAT_USER_ONLINE_STATUS = 'UPDATE_CHAT_USER_ONLINE_STATUS';
 export const UPDATE_CHAT_USER_TYPING_STATUS = 'UPDATE_CHAT_USER_TYPING_STATUS';
 
-export function startChat() {
+export const startChat = () => {
   return {
     type: START_CHAT,
   };
-}
-exports.startChat = startChat;
+};
 
-function newChatMessage(data) {
+export const newChatMessage = (data) => {
   return {
     type: NEW_CHAT_MESSAGE,
     data,
   };
-}
-exports.newChatMessage = newChatMessage;
+};
 
-function addChatMessage(data) {
+export const addChatMessage = (data) => {
   return {
     type: ADD_CHAT_MESSAGE,
     data,
   };
-}
-exports.addChatMessage = addChatMessage;
+};
 
-function updateChatUserOnlineStatus(isOnline, name) {
+export const updateChatUserOnlineStatus = (isOnline, name) => {
   return {
     type: UPDATE_CHAT_USER_ONLINE_STATUS,
     isOnline,
     name,
   };
-}
-exports.updateChatUserOnlineStatus = updateChatUserOnlineStatus;
+};
 
-function updateChatUserTypingStatus(isTyping, name) {
+export const updateChatUserTypingStatus = (isTyping, name) => {
   return {
     type: UPDATE_CHAT_USER_TYPING_STATUS,
     isTyping,
     name,
   };
-}
-exports.updateChatUserTypingStatus = updateChatUserTypingStatus;
+};
 
-function emitChatTypingStatus() {
+export const emitChatTypingStatus = () => {
   return {
     type: EMIT_CHAT_TYPING_STATUS,
   };
-}
-exports.emitChatTypingStatus = emitChatTypingStatus;
+};
 
-function sendChatMessage() {
-  return function (dispatch, getState) {
+export const sendChatMessage = () => {
+  return (dispatch, getState) => {
     const name = getState().session.userName;
     const message = getState().pages.chatRoom.newMessageText;
     const timestamp = new Date().toUTCString();
@@ -65,5 +59,4 @@ function sendChatMessage() {
     dispatch(updateChatRoomNewMessageText(''));
     dispatch(updateChatUserTypingStatus(false, name));
   };
-}
-exports.sendChatMessage = sendChatMessage;
+};

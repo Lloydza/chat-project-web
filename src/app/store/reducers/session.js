@@ -1,6 +1,6 @@
 import * as actions from 'app/store/actions/index';
 
-function sessionReducer(state = { userName: null }, action) {
+const sessionReducer = (state = { userName: null }, action) => {
   switch (action.type) {
     case actions.UPDATE_SESSION_USER_NAME:
       return Object.assign({}, state, {
@@ -9,5 +9,5 @@ function sessionReducer(state = { userName: null }, action) {
     default:
       return state;
   }
-}
+};
 module.exports = sessionReducer;

@@ -1,17 +1,15 @@
 import getHistory from '../../history';
 
-function changeRoute(route) {
-  return function () {
+export const changeRoute = (route) => {
+  return () => {
     const history = getHistory();
     history.push(route);
   };
-}
-exports.changeRoute = changeRoute;
+};
 
-function previousRoute() {
-  return function () {
+export const previousRoute = () => {
+  return () => {
     const history = getHistory();
     history.goBack();
   };
-}
-exports.previousRoute = previousRoute;
+};

@@ -1,6 +1,6 @@
 import * as actions from 'app/store/actions/index';
 
-function loginReducer(state = { isLoading: false, userName: '' }, action) {
+const loginReducer = (state = { isLoading: false, userName: '' }, action) => {
   switch (action.type) {
     case actions.UPDATE_LOGIN_PAGE_IS_LOADING:
       return Object.assign({}, state, {
@@ -13,5 +13,5 @@ function loginReducer(state = { isLoading: false, userName: '' }, action) {
     default:
       return state;
   }
-}
+};
 module.exports = loginReducer;

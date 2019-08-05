@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import styles from 'app/content/styles/containers/chatRoomPage/index.css';
 
 const TypingIndicator = (props) => {
@@ -10,21 +9,26 @@ const TypingIndicator = (props) => {
 
   return (
     <div className={styles.typingIndicatorContainer}>
-      <label>
-        {isTypingText}
-      </label>
+      <label>{isTypingText}</label>
     </div>
   );
-}
+};
 
 TypingIndicator.propTypes = {
-  isTypingText: PropTypes.bool,
-}
+  isTyping: PropTypes.bool,
+};
 
-const mapStateToProps = function (state, componentProps) {
+TypingIndicator.defaultProps = {
+  isTyping: false,
+};
+
+const mapStateToProps = (state, componentProps) => {
   return {
     isTyping: state.chat.typingStatus[componentProps.name],
   };
 };
 
-export default connect(mapStateToProps, null)(TypingIndicator);
+export default connect(
+  mapStateToProps,
+  null,
+)(TypingIndicator);

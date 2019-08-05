@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import OnlineIndicator from './onlineIndicator';
 import TypingIndicator from './typingIndicator';
 
@@ -12,23 +11,29 @@ const User = (props) => {
   return (
     <li>
       <OnlineIndicator name={name} />
-      {name}
-      {' '}
-      {isYouText}
+      {`${name} ${isYouText}`}
       <TypingIndicator name={name} />
     </li>
   );
-}
+};
 
-OnlineIndicator.propTypes = {
+User.propTypes = {
   userName: PropTypes.string,
   name: PropTypes.string,
-}
+};
 
-const mapStateToProps = function (state) {
+User.defaultProps = {
+  userName: '',
+  name: '',
+};
+
+const mapStateToProps = (state) => {
   return {
     userName: state.session.userName,
   };
 };
 
-export default connect(mapStateToProps, null)(User);
+export default connect(
+  mapStateToProps,
+  null,
+)(User);

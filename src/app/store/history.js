@@ -2,7 +2,7 @@ import { createBrowserHistory } from 'history';
 
 let history = null;
 
-const getHistory = function () {
+const getHistory = function() {
   if (!history) {
     history = createBrowserHistory();
   }

@@ -1,5 +1,5 @@
 // Logs all http requests
-const logger = function (req, res, next) {
+const logger = (req, res, next) => {
   console.log(new Date(), req.method, req.url);
   next();
 };

@@ -1,7 +1,6 @@
 import io from 'socket.io-client/dist/socket.io';
 import Constants from 'app/constants';
 import * as actions from './actions/index';
-
 import {
   updateChatRoomUsers,
   addChatMessage,
@@ -25,7 +24,7 @@ const typingIndicatorTimeoutDelay = 2000;
 // after this length of time of not receiving a ping assume the user is offline
 const onlineIndicatorTimeoutDelay = 5000;
 
-function initChat(store) {
+const initChat = (store) => {
   // Check chat has not already started
   if (socket) {
     return;
@@ -69,10 +68,9 @@ function initChat(store) {
     // Clear existing timer to turn of typing indicator and
     // then create a new one that will fire after 'typingIndicatorTimeoutDelay'
     clearTimeout(typingIndicatorTimeoutFuncs[typingName]);
-    typingIndicatorTimeoutFuncs[typingName] = setTimeout(
-      () => store.dispatch(updateChatUserTypingStatus(false, typingName)),
-      typingIndicatorTimeoutDelay,
-    );
+    typingIndicatorTimeoutFuncs[typingName] = setTimeout(() => {
+      return store.dispatch(updateChatUserTypingStatus(false, typingName));
+    }, typingIndicatorTimeoutDelay);
 
     store.dispatch(updateChatUserTypingStatus(true, typingName));
   });
@@ -81,28 +79,29 @@ function initChat(store) {
     // Clear existing timer to turn of online status
     // and then create a new one that will fire after 'onlineIndicatorTimeoutDelay'
     clearTimeout(onlineIndicatorTimeoutFuncs[onlineName]);
-    onlineIndicatorTimeoutFuncs[name] = setTimeout(
-      () => store.dispatch(updateChatUserOnlineStatus(false, onlineName)),
-      onlineIndicatorTimeoutDelay,
-    );
+    onlineIndicatorTimeoutFuncs[name] = setTimeout(() => {
+      return store.dispatch(updateChatUserOnlineStatus(false, onlineName));
+    }, onlineIndicatorTimeoutDelay);
     store.dispatch(updateChatUserOnlineStatus(true, name));
   });
-}
+};
 
-function chatMiddleware(store) {
-  return next => (action) => {
-    const result = next(action);
+const chatMiddleware = (store) => {
+  return (next) => {
+    return (action) => {
+      const result = next(action);
 
-    if (action.type === actions.START_CHAT) {
-      initChat(store);
-    } else if (socket && action.type === actions.NEW_CHAT_MESSAGE) {
-      socket.emit(Constants.SocketEvents.Message, action.data);
-    } else if (socket && action.type === actions.EMIT_CHAT_TYPING_STATUS) {
-      socket.emit(Constants.SocketEvents.TypingStatus, null);
-    }
+      if (action.type === actions.START_CHAT) {
+        initChat(store);
+      } else if (socket && action.type === actions.NEW_CHAT_MESSAGE) {
+        socket.emit(Constants.SocketEvents.Message, action.data);
+      } else if (socket && action.type === actions.EMIT_CHAT_TYPING_STATUS) {
+        socket.emit(Constants.SocketEvents.TypingStatus, null);
+      }
 
-    return result;
+      return result;
+    };
   };
-}
+};
 
 module.exports = { chatMiddleware };

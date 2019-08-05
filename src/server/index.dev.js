@@ -11,12 +11,14 @@ const compiler = webpack(clientConfig);
 
 app.use(cors);
 
-app.use(webpackDevMiddleware(compiler, {
-  headers: {
-    'Access-Control-Allow-Origin': 'http://localhost',
-  },
-  publicPath: clientConfig.output.publicPath,
-}));
+app.use(
+  webpackDevMiddleware(compiler, {
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost',
+    },
+    publicPath: clientConfig.output.publicPath,
+  }),
+);
 
 app.use(webpackHotMiddleware(compiler));
 
@@ -26,7 +28,6 @@ app.get('*', (req, res) => {
   res.set('X-FRAME-OPTIONS', 'DENY');
   res.sendFile(path.join(__dirname, '../../dist/static/index.html'));
 });
-
 
 let isBuilt = false;
 compiler.plugin('done', () => {

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Router, Switch, Route } from 'react-router-dom';
-
 import { changeRoute } from 'app/store/actions/index';
 import getHistory from 'app/store/history';
 
@@ -14,11 +13,11 @@ const history = getHistory();
 
 class RouteHandler extends Component {
   componentDidMount() {
-    const { userName } = this.props;
+    const { userName, onChangeRoute } = this.props;
     if (!userName && window.location.pathname !== '/login') {
-      this.props.onChangeRoute('/login');
+      onChangeRoute('/login');
     } else if (userName && window.location.pathname !== '/') {
-      this.props.onChangeRoute('/');
+      onChangeRoute('/');
     }
   }
 
@@ -39,18 +38,27 @@ class RouteHandler extends Component {
 RouteHandler.propTypes = {
   userName: PropTypes.string,
   onChangeRoute: PropTypes.func.isRequired,
-}
+};
 
-const mapStateToProps = function (state) {
+RouteHandler.defaultProps = {
+  userName: '',
+};
+
+const mapStateToProps = (state) => {
   return {
     userName: state.session.userName,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  onChangeRoute: (route) => {
-    dispatch(changeRoute(route));
-  },
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onChangeRoute: (route) => {
+      dispatch(changeRoute(route));
+    },
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(RouteHandler);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RouteHandler);

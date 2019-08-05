@@ -1,21 +1,15 @@
 /* eslint no-param-reassign: 0 */ // --> OFF
 import * as actions from 'app/store/actions/index';
 
-function chatReducer(state = { messages: [], onlineStatus: {}, typingStatus: {} }, action) {
+const chatReducer = (state = { messages: [], onlineStatus: {}, typingStatus: {} }, action) => {
   switch (action.type) {
     case actions.NEW_CHAT_MESSAGE:
       return Object.assign({}, state, {
-        messages: [
-          action.data,
-          ...state.messages,
-        ],
+        messages: [action.data, ...state.messages],
       });
     case actions.ADD_CHAT_MESSAGE:
       return Object.assign({}, state, {
-        messages: [
-          action.data,
-          ...state.messages,
-        ],
+        messages: [action.data, ...state.messages],
       });
     case actions.UPDATE_CHAT_USER_ONLINE_STATUS:
       state.onlineStatus[action.name] = action.isOnline;
@@ -28,5 +22,5 @@ function chatReducer(state = { messages: [], onlineStatus: {}, typingStatus: {} 
     default:
       return state;
   }
-}
+};
 module.exports = chatReducer;

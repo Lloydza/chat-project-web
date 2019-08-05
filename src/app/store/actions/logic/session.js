@@ -2,16 +2,15 @@ import { updateLoginPageIsLoading, startChat } from 'app/store/actions/index';
 
 export const UPDATE_SESSION_USER_NAME = 'UPDATE_SESSION_USER_NAME';
 
-function updateSessionUserName(userName) {
+export const updateSessionUserName = (userName) => {
   return {
     type: UPDATE_SESSION_USER_NAME,
     userName,
   };
-}
-exports.updateSessionUserName = updateSessionUserName;
+};
 
-function doLogin() {
-  return function (dispatch, getState) {
+export const doLogin = () => {
+  return (dispatch, getState) => {
     const userName = getState().pages.login.userName.trim();
 
     if (!userName) {
@@ -22,5 +21,4 @@ function doLogin() {
     dispatch(updateSessionUserName(userName));
     dispatch(startChat());
   };
-}
-exports.doLogin = doLogin;
+};
